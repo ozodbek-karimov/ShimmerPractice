@@ -52,10 +52,22 @@ fun View.onClick(clickListener: (View) -> Unit) {
     setOnClickListener(clickListener)
 }
 
-fun View.show() {
-    this.visibility = View.VISIBLE
+fun <VH : RecyclerView.ViewHolder> RecyclerView.setNullableAdapter(
+    adapter: RecyclerView.Adapter<VH>,
+) {
+    this.adapter = adapter
+    this.clearReference()
 }
 
-fun View.gone() {
-    this.visibility = View.GONE
+
+internal fun RecyclerView.clearReference() {
+    addOnAttachStateChangeListener(object : View.OnAttachStateChangeListener {
+
+        override fun onViewAttachedToWindow(v: View) {
+        }
+
+        override fun onViewDetachedFromWindow(v: View) {
+            this@clearReference.adapter = null
+        }
+    })
 }
