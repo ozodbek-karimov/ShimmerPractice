@@ -7,7 +7,7 @@ import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import pl.ozodbek.shimmerpractice.adapters.CommonPostsAdapter
+import pl.ozodbek.shimmerpractice.adapters.ReqresInUsersAdapter
 import pl.ozodbek.shimmerpractice.databinding.ActivityMainBinding
 import pl.ozodbek.shimmerpractice.util.Resource
 import pl.ozodbek.shimmerpractice.util.viewBinding
@@ -17,7 +17,7 @@ import pl.ozodbek.shimmerpractice.viewmodels.MainActivityViewModel
 class MainActivity : AppCompatActivity() {
 
     private val binding by viewBinding(ActivityMainBinding::inflate)
-    private val commonPostsAdapter: CommonPostsAdapter by lazy { CommonPostsAdapter() }
+    private val reqresInUsersAdapter: ReqresInUsersAdapter by lazy { ReqresInUsersAdapter() }
     private val viewModel:MainActivityViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupRecyclerView() {
-        binding.recyclerview.adapter = commonPostsAdapter
+        binding.recyclerview.adapter = reqresInUsersAdapter
     }
 
     private fun observeApiResponse() {
@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
 
                     }
                     is Resource.Success -> {
-                        commonPostsAdapter.submitList(response.value)
+                        reqresInUsersAdapter.submitList(response.value.data)
                     }
                 }
             }
@@ -57,6 +57,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupActionBar() {
-
+        this.setSupportActionBar(binding.toolbar)
+        this.title = "Shimmer Practice"
     }
 }

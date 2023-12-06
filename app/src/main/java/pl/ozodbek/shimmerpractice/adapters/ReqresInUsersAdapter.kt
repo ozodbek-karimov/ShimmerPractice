@@ -11,8 +11,8 @@ import pl.ozodbek.shimmerpractice.util.loadImage
 import pl.ozodbek.shimmerpractice.util.onClick
 import pl.ozodbek.shimmerpractice.util.viewBinding
 
-class CommonPostsAdapter :
-    ListAdapter<Data, CommonPostsAdapter.AdapterViewHolder>(MyDiffCallback()) {
+class ReqresInUsersAdapter :
+    ListAdapter<Data, ReqresInUsersAdapter.AdapterViewHolder>(MyDiffCallback()) {
 
     private var itemClickListener: ((Data) -> Unit)? = null
 
