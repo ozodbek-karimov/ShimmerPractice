@@ -7,7 +7,8 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import pl.ozodbek.shimmerpractice.data.Repository
-import pl.ozodbek.shimmerpractice.data.models.CommonPosts
+import pl.ozodbek.shimmerpractice.data.models.Data
+import pl.ozodbek.shimmerpractice.data.models.ReqresInUsers
 import pl.ozodbek.shimmerpractice.util.Resource
 import javax.inject.Inject
 
@@ -16,16 +17,16 @@ class MainActivityViewModel @Inject constructor(
     private val repository: Repository,
 ) : ViewModel() {
 
-    private val _commonPostResponseLiveData = MutableLiveData<Resource<List<CommonPosts>>>()
-    val commonPostResponseLiveData: LiveData<Resource<List<CommonPosts>>> get() = _commonPostResponseLiveData
+    private val _commonPostResponseLiveData = MutableLiveData<Resource<ReqresInUsers>>()
+    val commonPostResponseLiveData: LiveData<Resource<ReqresInUsers>> get() = _commonPostResponseLiveData
 
     init {
-        getCommonPost()
+        getReqresInUsers()
     }
 
-    private fun getCommonPost() = viewModelScope.launch {
+    private fun getReqresInUsers() = viewModelScope.launch {
         _commonPostResponseLiveData.postValue(Resource.Loading)
-        val response = repository.remote.getCommonPosts(10)
+        val response = repository.remote.getReqresInUsers(1)
         _commonPostResponseLiveData.postValue(response)
     }
 

@@ -5,11 +5,11 @@ import javax.inject.Inject
 
 class RemoteDataSource @Inject constructor(
 
-    private val profexAPI: ApiClient,
+    private val profexAPI: ReqresInAPI,
 
     ) : SafeApiCall {
 
-    suspend fun getCommonPosts(page: Int) = safeApiCall { profexAPI.getCommonPosts(page) }
+    suspend fun getReqresInUsers(page: Int) = safeApiCall { profexAPI.getReqresInUsers(page) }
 
 
 }

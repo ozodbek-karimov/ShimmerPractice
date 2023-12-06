@@ -11,8 +11,8 @@ import javax.inject.Singleton
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import okhttp3.MediaType.Companion.toMediaType
 import kotlinx.serialization.json.Json
-import pl.ozodbek.mastededittextpractice.util.Constants.Companion.BASE_URL
-import pl.ozodbek.shimmerpractice.data.ApiClient
+import pl.ozodbek.shimmerpractice.util.Constants.Companion.BASE_URL
+import pl.ozodbek.shimmerpractice.data.ReqresInAPI
 import retrofit2.Converter
 
 @Module
@@ -65,7 +65,7 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideApiService(retrofit: Retrofit): ApiClient {
-        return retrofit.create(ApiClient::class.java)
+    fun provideApiService(retrofit: Retrofit): ReqresInAPI {
+        return retrofit.create(ReqresInAPI::class.java)
     }
 }

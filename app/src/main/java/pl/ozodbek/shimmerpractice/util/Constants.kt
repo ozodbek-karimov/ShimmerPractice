@@ -1,9 +1,9 @@
-package pl.ozodbek.mastededittextpractice.util
+package pl.ozodbek.shimmerpractice.util
 
 class Constants {
 
     companion object{
-        const val BASE_URL = "http://165.227.164.31:3050/"
+        const val BASE_URL = "https://reqres.in/"
     }
 
 }
