@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import pl.ozodbek.shimmerpractice.data.Repository
-import pl.ozodbek.shimmerpractice.data.models.Data
 import pl.ozodbek.shimmerpractice.data.models.ReqresInUsers
 import pl.ozodbek.shimmerpractice.util.Resource
 import javax.inject.Inject

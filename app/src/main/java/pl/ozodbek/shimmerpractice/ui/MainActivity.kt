@@ -12,6 +12,7 @@ import kotlinx.coroutines.launch
 import pl.ozodbek.shimmerpractice.adapters.ReqresInUsersAdapter
 import pl.ozodbek.shimmerpractice.databinding.ActivityMainBinding
 import pl.ozodbek.shimmerpractice.util.Resource
+import pl.ozodbek.shimmerpractice.util.setNullableAdapter
 import pl.ozodbek.shimmerpractice.util.viewBinding
 import pl.ozodbek.shimmerpractice.viewmodels.MainActivityViewModel
 
@@ -36,15 +37,25 @@ class MainActivity : AppCompatActivity() {
         setupRecyclerView()
     }
 
+
+
+    /** SETTING UP ACTIONBAR */
     private fun setupActionBar() {
         this.setSupportActionBar(binding.toolbar)
         this.title = "Shimmer Practice"
     }
 
+
+
+    /** SETTING UP RECYCLERVIEW */
     private fun setupRecyclerView() {
         binding.recyclerview.adapter = reqresInUsersAdapter
+        binding.recyclerview.setNullableAdapter(adapter = reqresInUsersAdapter)
     }
 
+
+
+    /** OBSERVING API RESPONSE */
     private fun observeApiResponse() {
         lifecycleScope.launch(Dispatchers.Main) {
             viewModel.commonPostResponseLiveData.observe(this@MainActivity){response ->
@@ -60,8 +71,7 @@ class MainActivity : AppCompatActivity() {
                         lifecycleScope.launch {
                             delay(1500)
                             updateShimmerVisibility(showShimmer = false)
-                            val extendedData = (0 until 20).flatMap { response.value.data }
-                            reqresInUsersAdapter.submitList(extendedData)
+                            reqresInUsersAdapter.submitList(response.value.data)
                         }
                     }
                 }
@@ -69,6 +79,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
+    /** UPDATING VISIBILITY OF SHIMMER AND RECYCLERVIEW */
     private fun updateShimmerVisibility(showShimmer: Boolean) {
         val visibility = if (showShimmer) View.INVISIBLE else View.VISIBLE
         val shimmerVisibility = if (showShimmer) View.VISIBLE else View.INVISIBLE
