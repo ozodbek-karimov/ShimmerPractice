@@ -1,11 +1,13 @@
 package pl.ozodbek.shimmerpractice.ui
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import pl.ozodbek.shimmerpractice.adapters.ReqresInUsersAdapter
 import pl.ozodbek.shimmerpractice.databinding.ActivityMainBinding
@@ -34,6 +36,11 @@ class MainActivity : AppCompatActivity() {
         setupRecyclerView()
     }
 
+    private fun setupActionBar() {
+        this.setSupportActionBar(binding.toolbar)
+        this.title = "Shimmer Practice"
+    }
+
     private fun setupRecyclerView() {
         binding.recyclerview.adapter = reqresInUsersAdapter
     }
@@ -43,21 +50,36 @@ class MainActivity : AppCompatActivity() {
             viewModel.commonPostResponseLiveData.observe(this@MainActivity){response ->
                 when(response){
                     is Resource.Failure -> {
-
+                        updateShimmerVisibility(showShimmer = false)
                     }
                     Resource.Loading -> {
-
+                        updateShimmerVisibility(showShimmer = true)
                     }
                     is Resource.Success -> {
-                        reqresInUsersAdapter.submitList(response.value.data)
+                        /** REMOVE DELAY LATER,I JUST ADD IT TO SHOW YOU SHIMMER */
+                        lifecycleScope.launch {
+                            delay(1500)
+                            updateShimmerVisibility(showShimmer = false)
+                            val extendedData = (0 until 20).flatMap { response.value.data }
+                            reqresInUsersAdapter.submitList(extendedData)
+                        }
                     }
                 }
             }
         }
     }
 
-    private fun setupActionBar() {
-        this.setSupportActionBar(binding.toolbar)
-        this.title = "Shimmer Practice"
+    private fun updateShimmerVisibility(showShimmer: Boolean) {
+        val visibility = if (showShimmer) View.INVISIBLE else View.VISIBLE
+        val shimmerVisibility = if (showShimmer) View.VISIBLE else View.INVISIBLE
+
+        binding.recyclerview.visibility = visibility
+        binding.shimmerLayout.visibility = shimmerVisibility
+
+        if (showShimmer) {
+            binding.shimmerLayout.startShimmer()
+        } else {
+            binding.shimmerLayout.stopShimmer()
+        }
     }
 }
