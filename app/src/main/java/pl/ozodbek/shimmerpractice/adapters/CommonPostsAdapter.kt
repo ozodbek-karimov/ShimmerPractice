@@ -5,23 +5,23 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import pl.ozodbek.shimmerpractice.data.models.CommonPosts
-import pl.ozodbek.shimmerpractice.databinding.CommonPostsRowItemBinding
+import pl.ozodbek.shimmerpractice.data.models.Data
+import pl.ozodbek.shimmerpractice.databinding.ReqressinUsersRowItemBinding
 import pl.ozodbek.shimmerpractice.util.loadImage
 import pl.ozodbek.shimmerpractice.util.onClick
 import pl.ozodbek.shimmerpractice.util.viewBinding
 
 class CommonPostsAdapter :
-    ListAdapter<CommonPosts, CommonPostsAdapter.AdapterViewHolder>(MyDiffCallback()) {
+    ListAdapter<Data, CommonPostsAdapter.AdapterViewHolder>(MyDiffCallback()) {
 
-    private var itemClickListener: ((CommonPosts) -> Unit)? = null
+    private var itemClickListener: ((Data) -> Unit)? = null
 
-    fun setItemClickListener(listener: (CommonPosts) -> Unit) {
+    fun setItemClickListener(listener: (Data) -> Unit) {
         itemClickListener = listener
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdapterViewHolder {
-        return AdapterViewHolder(parent.viewBinding(CommonPostsRowItemBinding::inflate))
+        return AdapterViewHolder(parent.viewBinding(ReqressinUsersRowItemBinding::inflate))
     }
 
     override fun onBindViewHolder(holder: AdapterViewHolder, position: Int) {
@@ -30,23 +30,23 @@ class CommonPostsAdapter :
     }
 
 
-    class AdapterViewHolder(private val binding: CommonPostsRowItemBinding) :
+    class AdapterViewHolder(private val binding: ReqressinUsersRowItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         @SuppressLint("SetTextI18n")
         fun bind(
-            remoteData: CommonPosts,
-            clickListener: ((CommonPosts) -> Unit)?,
+            remoteData: Data,
+            clickListener: ((Data) -> Unit)?,
         ) {
             remoteData.let {
                 binding.apply {
 
-                    binding.imageView.loadImage(remoteData.imagePathModified)
+                    binding.imageView.loadImage(remoteData.avatar)
 
-                    binding.textView.text = remoteData.title
-                    binding.textView2.text = remoteData.description
-                    binding.textView3.text = remoteData.district
-                    binding.textView4.text = remoteData.region
+                    binding.textView.text = remoteData.firstName
+                    binding.textView2.text = remoteData.lastName
+                    binding.textView3.text = remoteData.email
+                    binding.textView4.text = remoteData.id.toString()
 
                     root.onClick { clickListener?.invoke(remoteData) }
                 }
@@ -54,11 +54,11 @@ class CommonPostsAdapter :
         }
     }
 
-    private class MyDiffCallback : DiffUtil.ItemCallback<CommonPosts>() {
-        override fun areItemsTheSame(oldItem: CommonPosts, newItem: CommonPosts) =
+    private class MyDiffCallback : DiffUtil.ItemCallback<Data>() {
+        override fun areItemsTheSame(oldItem: Data, newItem: Data) =
             oldItem.id == newItem.id
 
-        override fun areContentsTheSame(oldItem: CommonPosts, newItem: CommonPosts) =
+        override fun areContentsTheSame(oldItem: Data, newItem: Data) =
             oldItem == newItem
     }
 

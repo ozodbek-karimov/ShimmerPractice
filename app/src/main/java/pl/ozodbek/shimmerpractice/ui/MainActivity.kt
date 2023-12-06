@@ -26,7 +26,6 @@ class MainActivity : AppCompatActivity() {
 
 
         setupUI()
-        /*asdaad*/
     }
 
     private fun setupUI() {
